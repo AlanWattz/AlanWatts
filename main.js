@@ -4,12 +4,10 @@ var colors = require('colors');
 var Long = require("long");
 const config = require("./config.json");
 
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`.rainbow);
-
-    if (config.status_log_channel_id) {
-        client.channels.get(config.status_log_channel_id).send("back online!")
-    }
+    client.channels.get("620852303301443584").send("back online!")
 });
 
 client.on("disconnect", function(event) {
@@ -17,6 +15,25 @@ client.on("disconnect", function(event) {
 });
 
 client.on('message', message => {
+    var quoteArray = [
+        "Trying to define yourself is like trying to bite your own teeth.",
+        "We seldom realize, for example that our most private thoughts and emotions are not actually our own. For we think in terms of languages and images which we did not invent, but which were given to us by our society.",
+        "Man suffers only because he takes seriously what the gods made for fun.",
+        "This is the real secret of life -- to be completely engaged with what you are doing in the here and now. And instead of calling it work, realize it is play.",
+        "The meaning of life is just to be alive. It is so plain and so obvious and so simple. And yet, everybody rushes around in a great panic as if it were necessary to achieve something beyond themselves.",
+        "All camels will eventually thrive",
+        "No valid plans for the future can be made by those who have no capacity for living now.",
+        "The only way to make sense out of change is to plunge into it, move with it, and join the dance.",
+        "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is.",
+        "Never pretend to a love which you do not actually feel, for love is not ours to command.",
+        "You and I are all as much continuous with the physical universe as a wave is continuous with the ocean.",
+        "Zen does not confuse spirituality with thinking about God while one is peeling potatoes. Zen spirituality is just to peel the potatoes.",
+        "But I'll tell you what hermits realize. If you go off into a far, far forest and get very quiet, you'll come to understand that you're connected with everything.",
+        "You don't look out there for God, something in the sky, you look in you.",
+        "You are that vast thing that you see far, far off with great telescopes."
+
+    ];
+    var quote = quoteArray[Math.floor(Math.random() * quoteArray.length)]
     if (message.content === 'ping') {
         console.log("Ping Pong!".red);
         message.reply('Pong!');
@@ -35,27 +52,10 @@ client.on('message', message => {
     }
     if (message.content === 'quote') {
         //quoteArray[Math.floor(Math.random()*quoteArray.length)]
-        var quoteArray = [
-            "Trying to define yourself is like trying to bite your own teeth.",
-            "We seldom realize, for example that our most private thoughts and emotions are not actually our own. For we think in terms of languages and images which we did not invent, but which were given to us by our society.",
-            "Man suffers only because he takes seriously what the gods made for fun.",
-            "This is the real secret of life -- to be completely engaged with what you are doing in the here and now. And instead of calling it work, realize it is play.",
-            "The meaning of life is just to be alive. It is so plain and so obvious and so simple. And yet, everybody rushes around in a great panic as if it were necessary to achieve something beyond themselves.",
-            "All camels will eventually thrive",
-            "No valid plans for the future can be made by those who have no capacity for living now.",
-            "The only way to make sense out of change is to plunge into it, move with it, and join the dance.",
-            "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is.",
-            "Never pretend to a love which you do not actually feel, for love is not ours to command.",
-            "You and I are all as much continuous with the physical universe as a wave is continuous with the ocean.",
-            "Zen does not confuse spirituality with thinking about God while one is peeling potatoes. Zen spirituality is just to peel the potatoes.",
-            "But I'll tell you what hermits realize. If you go off into a far, far forest and get very quiet, you'll come to understand that you're connected with everything.",
-            "You don't look out there for God, something in the sky, you look in you.",
-            "You are that vast thing that you see far, far off with great telescopes."
-
-        ];
+        
 
         //message.reply(quoteArray[Math.floor(Math.random()*quoteArray.length)]);
-        var quote = quoteArray[Math.floor(Math.random() * quoteArray.length)]
+      //  var quote = quoteArray[Math.floor(Math.random() * quoteArray.length)]
         message.channel.send("```" + quote + "```")
             //console.log("sending quote");
         console.log("sending quote".yellow)
@@ -68,7 +68,16 @@ client.on('message', message => {
     if (message.content === 'pong') {
         console.log("Its Fucking Ping NOT PONG!!".underline.red);
         message.reply('its ping not pong!');
+    }if(message.content ==='read quote'){
+        console.log("Reading quote".yellow)
+        console.log(quote.green);
+        message.channel.send("```" + quote + "```",{tts: true})
+
     }
+    // if (message.channel.type == 'text') {
+    //   message.reply('fuck');
+    // return;
+    //}
 
 });
 
@@ -114,22 +123,19 @@ standard_input.on('data', function(data) {
 function shutDown(arg) {
     if (arg == 1) {
         console.log("shutting down safely!");
+        client.destroy();
         process.exit();
 
     } else {
         console.log("Not shutting down!");
-        if (config.status_log_channel_id) {
-            client.channels.get(config.status_log_channel_id).send("false alarm!")
-        }
+        client.channels.get("620852303301443584").send("false alarm!")
 
     }
 }
 
 process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
-    if (config.status_log_channel_id) {
-        client.channels.get(config.status_log_channel_id).send("A keyboard Interupt detected! shutting down!")
-    }
+    client.channels.get("620852303301443584").send("A keyboard Interupt detected! shutting down!")
 
     setTimeout(shutDown, 1500, '1');
 
