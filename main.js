@@ -4,10 +4,12 @@ var colors = require('colors');
 var Long = require("long");
 const config = require("./config.json");
 
-
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`.rainbow);
-    client.channels.get("456886848250314792").send("back online!")
+
+    if (config.status_log_channel_id) {
+        client.channels.get(config.status_log_channel_id).send("back online!")
+    }
 });
 
 client.on("disconnect", function(event) {
@@ -116,14 +118,18 @@ function shutDown(arg) {
 
     } else {
         console.log("Not shutting down!");
-        client.channels.get("456886848250314792").send("false alarm!")
+        if (config.status_log_channel_id) {
+            client.channels.get(config.status_log_channel_id).send("false alarm!")
+        }
 
     }
 }
 
 process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
-    client.channels.get("456886848250314792").send("A keyboard Interupt detected! shutting down!")
+    if (config.status_log_channel_id) {
+        client.channels.get(config.status_log_channel_id).send("A keyboard Interupt detected! shutting down!")
+    }
 
     setTimeout(shutDown, 1500, '1');
 

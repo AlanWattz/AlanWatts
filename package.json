@@ -1,0 +1,23 @@
+{
+  "name": "alanwatts",
+  "version": "1.0.0",
+  "description": "A Discord bot to quote Alan Watts lectures",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlanWattz/AlanWatts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlanWattz/AlanWatts/issues"
+  },
+  "homepage": "https://github.com/AlanWattz/AlanWatts#readme",
+  "dependencies": {
+    "colors": "^1.3.3",
+    "discord.js": "^11.5.1"
+  }
+}
