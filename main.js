@@ -7,7 +7,9 @@ const config = require("./config.json");
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`.rainbow);
-    client.channels.get("620852303301443584").send("back online!")
+    if (config.statusLogChannelId) {
+        client.channels.get(config.statusLogChannelId).send("back online!")
+    }
 });
 
 client.on("disconnect", function(event) {
@@ -128,14 +130,14 @@ function shutDown(arg) {
 
     } else {
         console.log("Not shutting down!");
-        client.channels.get("620852303301443584").send("false alarm!")
+        client.channels.get(config.statusLogChannelId).send("false alarm!")
 
     }
 }
 
 process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
-    client.channels.get("620852303301443584").send("A keyboard Interupt detected! shutting down!")
+    client.channels.get(config.statusLogChannelId).send("A keyboard Interupt detected! shutting down!")
 
     setTimeout(shutDown, 1500, '1');
 
