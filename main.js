@@ -130,14 +130,18 @@ function shutDown(arg) {
 
     } else {
         console.log("Not shutting down!");
-        client.channels.get(config.statusLogChannelId).send("false alarm!")
+        if (config.statusLogChannelId) {
+            client.channels.get(config.statusLogChannelId).send("false alarm!")
+        }
 
     }
 }
 
 process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
-    client.channels.get(config.statusLogChannelId).send("A keyboard Interupt detected! shutting down!")
+    if (config.statusLogChannelId) {
+        client.channels.get(config.statusLogChannelId).send("A keyboard Interupt detected! shutting down!")
+    }
 
     setTimeout(shutDown, 1500, '1');
 
